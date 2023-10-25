@@ -42,6 +42,8 @@ int main(int argc, char *argv[]) {
   double tfactor;
 
   FILE *fp = fopen(TEMP_FILE_META, "rb");
+  int datetime[6];
+  fread(datetime, sizeof(int), 6, fp);
   fread(&duration, sizeof(uint32_t), 1, fp);
   fread(&nsamples, sizeof(uint64_t), 1, fp);
   fread(&fs, sizeof(double), 1, fp);
@@ -50,6 +52,9 @@ int main(int argc, char *argv[]) {
   fread(&tfactor, sizeof(double), 1, fp);
   fclose(fp);
 
+  printf("saved on:	%4d/%02d/%02d %02d:%02d:%02d UTC\n", 
+	  datetime[0], datetime[1], datetime[2], 
+	  datetime[3], datetime[4], datetime[5]);
   printf("duration:	%u\n", duration);
   printf("nsamples:	%lu\n", nsamples);
   printf("fs:		%lf\n", fs);
